@@ -266,7 +266,7 @@ This platform enables teams to:
 - Business Reporting
 
 ---
-
+<!--
 # 🚀 Future Improvements
 
 - Delta Lake implementation
@@ -275,6 +275,7 @@ This platform enables teams to:
 - Data quality framework
 - Power BI dashboards
 - CI/CD automation
+-->
 
 ---
 
