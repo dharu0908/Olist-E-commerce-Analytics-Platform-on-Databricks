@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environments
+venv/
+env/
+.venv/
+
+# Databricks
+.ipynb_checkpoints/
+
+# Logs
+logs/
+*.log
+
+# Spark
+spark-warehouse/
+
+# Airflow
+airflow.db
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Environment
+.env
+.env.*
+
+# Build
+dist/
+build/
