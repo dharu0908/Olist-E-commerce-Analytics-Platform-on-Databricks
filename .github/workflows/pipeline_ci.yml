@@ -31,4 +31,4 @@ jobs:
           python -m py_compile serving/analytics.py
           python -m py_compile utils/config.py
           python -m py_compile utils/spark_session.py
-          python -m py_compile dags/olist_dag.py
+          python -m py_compile dags/olist_pipeline_dag.py
