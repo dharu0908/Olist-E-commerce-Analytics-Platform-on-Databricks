@@ -1,3 +1,10 @@
+"""
+Airflow DAG for orchestrating the Olist Databricks Medallion pipeline.
+
+This DAG defines the production orchestration pattern for running
+Bronze, Silver, Gold, and Analytics layers as separate tasks.
+"""
+
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 from datetime import datetime, timedelta
