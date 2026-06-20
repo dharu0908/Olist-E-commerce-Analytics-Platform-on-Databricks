@@ -25,10 +25,10 @@ jobs:
       - name: Validate Python syntax
         run: |
           python -m py_compile main.py
-          python -m py_compile Ingestion/bronze_loader.py
-          python -m py_compile Transformation/silver_cleaner.py
-          python -m py_compile Transformation/gold_features.py
-          python -m py_compile Serving/analytics.py
-          python -m py_compile Utils/config.py
-          python -m py_compile Utils/spark_session.py
-          python -m py_compile Dags/olist_dag.py
+          python -m py_compile ingestion/bronze_loader.py
+          python -m py_compile transformation/silver_cleaner.py
+          python -m py_compile transformation/gold_features.py
+          python -m py_compile serving/analytics.py
+          python -m py_compile utils/config.py
+          python -m py_compile utils/spark_session.py
+          python -m py_compile dags/olist_dag.py
