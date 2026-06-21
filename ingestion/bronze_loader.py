@@ -151,7 +151,7 @@ def write_bronze(dataframes: dict):
         (
             df.write
             .mode("overwrite")
-            .format("parquet")
+            .format("delta")
             .save(output_path)
         )
 
@@ -191,4 +191,4 @@ def run_bronze_ingestion(spark: SparkSession):
     print_summary(dataframes)
 
     elapsed = (datetime.now() - start).seconds
-    log.info(f"Bronze ingestion completed in {elapsed}s")
+    print(f"Bronze ingestion completed in {elapsed}s")
