@@ -38,16 +38,16 @@ def register_views(spark: SparkSession) -> None:
 
     log.info("Registering Gold tables as SQL views")
 
-    spark.read.parquet(f"{gold_path}/rfm_customers") \
+    spark.read.format("delta").load(f"{gold_path}/rfm_customers") \
         .createOrReplaceTempView("rfm_customers")
 
-    spark.read.parquet(f"{gold_path}/seller_scores") \
+    spark.read.format("delta").load(f"{gold_path}/seller_scores") \
         .createOrReplaceTempView("seller_scores")
 
-    spark.read.parquet(f"{gold_path}/category_stats") \
+    spark.read.format("delta").load(f"{gold_path}/category_stats") \
         .createOrReplaceTempView("category_stats")
 
-    spark.read.parquet(f"{gold_path}/monthly_trends") \
+    spark.read.format("delta").load(f"{gold_path}/monthly_trends") \
         .createOrReplaceTempView("monthly_trends")
 
     log.info("Gold SQL views registered")
