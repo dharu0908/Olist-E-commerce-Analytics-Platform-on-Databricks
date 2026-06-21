@@ -62,7 +62,8 @@ def read_bronze(spark: SparkSession) -> dict:
         "sellers",
         "translations",
     ]:
-        tables[name] = spark.read.parquet(f"{bronze_path}/{name}")
+        df = spark.read.format("delta").load(f"{bronze_path}/{name}")
+        tables[name] = df
         log.info(f"{name} loaded")
 
     return tables
@@ -291,7 +292,7 @@ def write_silver(df: DataFrame) -> None:
         .write
         .mode("overwrite")
         .partitionBy("order_year", "order_month")
-        .format("parquet")
+        .format("delta")
         .save(silver_path)
     )
 

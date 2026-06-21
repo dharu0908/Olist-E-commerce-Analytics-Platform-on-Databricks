@@ -31,7 +31,7 @@ def read_silver(spark: SparkSession) -> DataFrame:
     """Read the cleaned Silver dataset."""
 
     log.info("Reading Silver dataset")
-    return spark.read.parquet(silver_path)
+    return spark.read.format("delta").load(silver_path)
 
 
 def build_rfm_customers(silver: DataFrame) -> DataFrame:
@@ -196,7 +196,7 @@ def write_gold_table(df: DataFrame, table_name: str) -> None:
     (
         df.write
         .mode("overwrite")
-        .format("parquet")
+        .format("delta")
         .save(output_path)
     )
 
