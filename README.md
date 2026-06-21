@@ -1,74 +1,41 @@
-# 🚀 Olist E-commerce Data Platform on Databricks
+# Olist E-commerce Data Platform on Databricks
 
-An end-to-end Data Engineering project built on **Databricks Community Edition** using **PySpark**, **Parquet**, and a **Medallion Architecture (Bronze → Silver → Gold)**.
+## Overview
 
-The platform ingests raw Olist e-commerce data, performs data quality validation, builds analytical datasets, and generates business-focused insights such as customer segmentation, seller performance, product category analytics, and revenue trends.
+This project builds an end-to-end Data Engineering platform on Databricks Community Edition using PySpark, Parquet, Spark SQL, Apache Airflow, and GitHub Actions.
 
----
-
-# 📌 Project Overview
-
-This project demonstrates how raw transactional data can be transformed into business-ready analytical datasets.
-
-### Key Capabilities
-
-- Raw CSV ingestion into Bronze layer
-- Data quality validation and schema enforcement
-- Business-focused Silver transformations
-- Gold analytical marts
-- Spark SQL reporting layer
-- Customer segmentation using RFM analysis
-- Seller and category performance analytics
+The platform ingests raw Olist e-commerce data, performs data quality validation, transforms transactional datasets through a Medallion Architecture (Bronze → Silver → Gold), and generates analytical marts for customer segmentation, seller performance, category analytics, and revenue trend reporting.
 
 ---
 
-# 🏗 Architecture
+## Business Problem
 
-```text
-                        Olist CSV Files
-                               │
-                               ▼
-                    Databricks Volume Storage
-                               │
-                               ▼
-┌──────────────────────────────────────────────┐
-│                 Bronze Layer                 │
-├──────────────────────────────────────────────┤
-│ Raw Parquet Storage                          │
-│ Schema Enforcement                           │
-│ Metadata Tracking                            │
-│ Data Quality Validation                      │
-└──────────────────────────────────────────────┘
-                               │
-                               ▼
-┌──────────────────────────────────────────────┐
-│                 Silver Layer                 │
-├──────────────────────────────────────────────┤
-│ Payment Aggregation                          │
-│ Customer Enrichment                          │
-│ Product Category Translation                 │
-│ Delivery Metrics                             │
-│ Revenue Metrics                              │
-│ Review Sentiment Analysis                    │
-└──────────────────────────────────────────────┘
-                               │
-                               ▼
-┌──────────────────────────────────────────────┐
-│                  Gold Layer                  │
-├──────────────────────────────────────────────┤
-│ Customer RFM Segmentation                    │
-│ Seller Performance Mart                      │
-│ Category Analytics Mart                      │
-│ Monthly Revenue Trends Mart                  │
-└──────────────────────────────────────────────┘
-                               │
-                               ▼
-                     Spark SQL Analytics
-```
+E-commerce businesses generate large volumes of data across customers, orders, products, sellers, payments, and reviews.
+
+Business teams need reliable analytics to:
+
+- Identify high-value customers
+- Track seller performance
+- Analyze category profitability
+- Monitor delivery quality
+- Understand customer behavior
+- Measure revenue growth trends
+
+Raw transactional data is fragmented across multiple tables and difficult to analyze directly. This project transforms operational data into business-ready analytical datasets.
 
 ---
 
-# 🛠 Tech Stack
+## Architecture
+
+The platform follows a Medallion Architecture implemented on Databricks using PySpark, Parquet, Spark SQL, Apache Airflow, and GitHub Actions.
+
+![Architecture](screenshots/architecture.png)
+
+The pipeline ingests raw Olist datasets, transforms them through Bronze, Silver, and Gold layers, and generates business-ready analytical marts for customer, seller, category, and revenue analytics.
+
+---
+
+## Technology Stack
 
 | Layer | Technology |
 |---------|------------|
@@ -76,29 +43,44 @@ This project demonstrates how raw transactional data can be transformed into bus
 | Processing | PySpark |
 | Storage | Parquet |
 | Analytics | Spark SQL |
-| Language | Python |
+| Workflow Orchestration | Apache Airflow |
+| CI/CD | GitHub Actions |
+| Programming Language | Python |
 | Architecture | Medallion Architecture |
-| Dataset | Olist E-commerce Dataset |
+| Version Control | Git & GitHub |
 
 ---
 
-# 📂 Project Structure
+## Dataset
 
-![Project Structure](screenshots/project_structure.png)
+The platform uses the Olist Brazilian E-commerce Dataset.
+
+### Source Tables
+
+- Customers
+- Orders
+- Order Items
+- Payments
+- Reviews
+- Products
+- Sellers
+- Product Category Translation
+
+### Dataset Scale
+
+| Metric | Value |
+|----------|----------|
+| Orders | 99,441 |
+| Customers | 99,441 |
+| Order Items | 112,650 |
+| Payments | 103,886 |
+| Reviews | 104,162 |
+| Products | 32,951 |
+| Sellers | 3,095 |
 
 ---
 
-# ⚙️ End-to-End Pipeline Execution
-
-![Pipeline Step 1](screenshots/pipeline_execution_1.png)
-
-![Pipeline Step 2](screenshots/pipeline_execution_2.png)
-
-![Pipeline Step 3](screenshots/pipeline_execution_3.png)
-
-![Pipeline Step 4](screenshots/pipeline_execution_4.png)
-
-### Pipeline Metrics
+## Pipeline Metrics
 
 | Metric | Value |
 |----------|----------|
@@ -108,104 +90,157 @@ This project demonstrates how raw transactional data can be transformed into bus
 | Distinct Orders | 99,441 |
 | RFM Customers | 93,396 |
 | Seller Scores | 3,095 |
-| Category Stats | 74 |
+| Category Statistics | 74 |
 | Monthly Trend Records | 25 |
 
 ---
 
-# 🥉 Bronze Layer
+## Bronze Layer
 
-The Bronze layer ingests raw CSV datasets and stores them as Parquet files while preserving source fidelity.
+The Bronze layer stores raw source data while preserving source fidelity.
 
 ### Features
 
-- Explicit schema enforcement
+- Raw data ingestion
+- Schema enforcement
 - Metadata tracking
-- Row count validation
-- Null key detection
-- Source file lineage
+- Data quality validation
+- Source lineage tracking
 
 ---
 
-# 🥈 Silver Layer
+## Silver Layer
 
-The Silver layer creates a business-ready order-level dataset by joining and enriching raw datasets.
+The Silver layer creates a business-ready order-level dataset through enrichment and transformations.
 
-### Business Features Created
+### Business Features
+
+- Customer enrichment
+- Seller enrichment
+- Product category translation
+- Payment aggregation
+- Review integration
+- Delivery performance metrics
+
+### Derived Metrics
 
 - Delivery Delay Days
 - Fulfillment Days
 - Total Item Revenue
 - Freight Percentage
 - Review Sentiment
-- Order Date Dimensions
+- Order Year, Month, and Day
 
 ---
 
-# 🥇 Gold Layer
+## Gold Layer
 
 The Gold layer contains analytical marts optimized for reporting and business decision-making.
 
-### Gold Datasets
+### Customer RFM Segmentation
 
-#### Customer RFM Mart
-- Champion
+Customer groups generated using Recency, Frequency, and Monetary analysis:
+
+- Champions
 - High Value
 - Loyal
 - Regular
 - Recent
 
-#### Seller Performance Mart
-- Revenue Metrics
-- Seller Tiering
-- Delivery Performance
-- Review Scores
+### Seller Performance Mart
 
-#### Category Analytics Mart
+Metrics include:
+
+- Revenue
+- Review Scores
+- Delivery Performance
+- Revenue Rankings
+
+### Category Analytics Mart
+
+Metrics include:
+
 - Revenue by Category
 - Order Volume
 - Customer Satisfaction
+- Average Review Scores
 
-#### Monthly Trends Mart
+### Monthly Revenue Trends Mart
+
+Metrics include:
+
 - Revenue Growth
-- Order Volume Trends
+- Order Trends
+- Customer Trends
 - Delivery Performance
 
 ---
 
-# 📊 Analytics Results
+## Pipeline Execution
 
-## Customer Segmentation
+### Bronze Layer Execution
 
-![Customer Segments](screenshots/customer_segmentation.png)
+Raw datasets ingested into Databricks and stored as Parquet files.
 
-### Insights
-
-- High Value customers spend over 6x more than Regular customers.
-- Champions represent a small but highly valuable customer group.
-- Recent customers show the strongest review scores.
+![Pipeline Step 1](screenshots/pipeline_execution_1.png)
 
 ---
 
-## Top 10 Sellers by Revenue
+### Silver Layer Processing
+
+Business enrichment, joins, delivery metrics, payment aggregation, and sentiment creation.
+
+![Pipeline Step 2](screenshots/pipeline_execution_2.png)
+
+---
+
+### Gold Layer Analytics
+
+Customer segmentation, seller scoring, category analytics, and revenue trend generation.
+
+![Pipeline Step 3](screenshots/pipeline_execution_3.png)
+
+---
+
+### Spark SQL Reporting Layer
+
+Business-ready reporting datasets generated from Gold layer outputs.
+
+![Pipeline Step 4](screenshots/pipeline_execution_4.png)
+
+---
+
+## Analytics Results
+
+### Customer Segmentation
+
+![Customer Segmentation](screenshots/customer_segmentation.png)
+
+#### Key Insights
+
+- High Value customers spend more than 6× compared to Regular customers.
+- Champions contribute a disproportionate share of revenue.
+- Recent customers show strong retention potential.
+
+---
+
+### Top 10 Sellers by Revenue
 
 ![Top Sellers](screenshots/top%2010%20sellers%20by%20revenue.png)
 
-### Insights
+#### Key Insights
 
-- Top-performing sellers are heavily concentrated in São Paulo.
-- Top sellers generate more than 200K in revenue.
-- Seller performance varies significantly by region.
+- Top-performing sellers are concentrated in São Paulo.
+- Leading sellers generate over 200K in revenue.
+- Revenue contribution is heavily concentrated among a small group of sellers.
 
 ---
 
-## Top 15 Product Categories
+### Top 15 Product Categories
 
 ![Top Categories](screenshots/top%2015%20product%20categories.png)
 
-### Insights
-
-Highest-performing categories:
+#### Highest Revenue Categories
 
 1. Health & Beauty
 2. Watches & Gifts
@@ -215,67 +250,117 @@ Highest-performing categories:
 
 ---
 
-## Monthly Revenue Trends
+### Monthly Revenue Trends
 
-![Monthly Trends](screenshots/monthly%20revenue%20trends.png)
+![Monthly Revenue Trends](screenshots/monthly%20revenue%20trends.png)
 
-### Insights
+#### Key Insights
 
 - Revenue grows steadily throughout 2017.
 - Order volume increases significantly over time.
-- Seasonal shopping trends are visible.
+- Seasonal purchasing patterns are clearly visible.
 
 ---
 
-# 📈 Business Value
+## Workflow Orchestration
 
-This platform enables teams to:
+Apache Airflow orchestrates the complete pipeline.
+
+Pipeline stages:
+
+1. Bronze Data Ingestion
+2. Silver Data Transformation
+3. Gold Analytics Generation
+4. Spark SQL Reporting
+
+Benefits:
+
+- Automated execution
+- Dependency management
+- Monitoring and observability
+- Production-style workflow orchestration
+
+---
+
+## CI/CD
+
+GitHub Actions provides automated validation for the project.
+
+### Automated Checks
+
+- Python dependency installation
+- PySpark validation
+- Airflow validation
+- Python syntax checks
+- Pipeline module verification
+
+Validated files include:
+
+- main.py
+- bronze_loader.py
+- silver_cleaner.py
+- gold_features.py
+- analytics.py
+- spark_session.py
+- config.py
+- olist_pipeline_dag.py
+
+---
+
+## Business Value
+
+The platform enables organizations to:
 
 - Identify high-value customers
-- Track seller performance
-- Monitor delivery quality
+- Improve retention strategies
+- Monitor seller performance
+- Track delivery quality
 - Analyze category profitability
-- Understand revenue trends
-- Support retention and growth strategies
+- Measure revenue growth
+- Support data-driven decision-making
 
 ---
 
-# 🎯 Skills Demonstrated
+## Project Outcomes
+
+- Built an end-to-end Data Engineering platform on Databricks.
+- Processed over 1.5 million source records.
+- Implemented a Medallion Architecture using Bronze, Silver, and Gold layers.
+- Created analytical marts for customer, seller, category, and revenue reporting.
+- Implemented Apache Airflow workflow orchestration.
+- Built Spark SQL reporting datasets.
+- Added GitHub Actions CI/CD validation.
+- Generated actionable business insights from raw transactional data.
+
+---
+
+## Skills Demonstrated
 
 ### Data Engineering
 
-- Data Ingestion
+- PySpark
 - ETL Development
-- Schema Management
+- Data Ingestion
 - Data Validation
 - Data Modeling
 - Medallion Architecture
 
-### Databricks
+### Databricks & Analytics
 
-- Databricks Volumes
-- PySpark Transformations
+- Databricks
 - Spark SQL
 - Parquet Storage
-
-### Analytics
-
 - Customer Segmentation
-- Revenue Analysis
-- KPI Development
-- Business Reporting
+- Revenue Analytics
+- Seller Analytics
+- Category Analytics
 
----
-<!--
-# 🚀 Future Improvements
+### DevOps
 
-- Delta Lake implementation
-- Incremental processing
-- Workflow orchestration
-- Data quality framework
-- Power BI dashboards
-- CI/CD automation
--->
+- Apache Airflow
+- GitHub Actions
+- CI/CD
+- Git & GitHub
 
 ---
 
@@ -283,4 +368,6 @@ This platform enables teams to:
 
 **Dharmik Patel**
 
-Data Engineering | PySpark | Databricks | SQL | Analytics Engineering
+Portfolio: https://www.ptldharmik.com
+
+GitHub: https://github.com/dharu0908
